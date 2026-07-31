@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <!-- SEO & METADATA -->
+    <title>Balap Mobil Pancasila - Game Edukasi SD</title>
+    <meta name="description" content="Game Edukasi Balap Mobil Pancasila untuk Sekolah Dasar. Pelajari hubungan antarsila dalam Pancasila secara seru, interaktif, dan menyenangkan!">
+    <meta name="keywords" content="Game Edukasi, Balap Mobil Pancasila, Pancasila SD, Media Pembelajaran SD, Pak Lehan">
+    <meta name="author" content="Pak LEhan">
+
+    <!-- Open Graph / Facebook / WhatsApp Preview -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Balap Mobil Pancasila - Game Edukasi SD">
+    <meta property="og:description" content="Mainkan game edukasi Balap Mobil Pancasila! Belajar hubungan antarsila Pancasila dengan seru, kumpulkan poin, dan raih sertifikat juara!">
+    <meta property="og:image" content="lehan.jpg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Balap Mobil Pancasila - Game Edukasi SD">
+    <meta name="twitter:description" content="Game edukasi interaktif balap mobil bertema Pancasila untuk anak SD karya Pak LEhan.">
+    <meta name="twitter:image" content="lehan.jpg">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+
+        /* Latar belakang grid biru tua sesuai desain */
+        body {
+            background-color: #0b1329;
+            background-image: 
+                radial-gradient(rgba(255, 255, 255, 0.12) 1.5px, transparent 1.5px),
+                radial-gradient(rgba(255, 255, 255, 0.08) 1.5px, #0b1329 1.5px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            min-height: 100vh;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Tombol Orange Gradient Glowing */
+        .btn-orange-glow {
+            box-shadow: 0 0 20px rgba(249, 115, 22, 0.6);
+            transition: all 0.25s ease-in-out;
+        }
+        .btn-orange-glow:hover {
+            box-shadow: 0 0 30px rgba(249, 115, 22, 0.9);
+            transform: translateY(-2px) scale(1.02);
+        }
+        .btn-orange-glow:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        /* Animasi Modal Pop In */
+        .modal-animate {
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes popIn {
+            from { transform: scale(0.85); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* Scrollbar Khusus untuk Modal Materi */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="flex flex-col justify-between min-h-screen">
+
+    <!-- HEADER BAR -->
+    <header class="w-full px-4 py-3 flex justify-between items-center bg-slate-900/80 backdrop-blur-md border-b border-slate-800 z-20">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-orange-500 to-amber-400 p-0.5 flex items-center justify-center shadow-lg">
+                <i class="fa-solid fa-flag-checkered text-slate-950 text-lg"></i>
+            </div>
+            <div>
+                <h1 class="font-black text-sm md:text-base text-white tracking-wide">BALAP MOBIL PANCASILA</h1>
+                <p class="text-[10px] md:text-xs text-amber-400 font-bold">SD NEGERI 2 SENDANG AYU</p>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+            <button onclick="goHome()" class="bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white px-3 py-1.5 rounded-xl text-xs md:text-sm font-semibold transition flex items-center gap-1.5 shadow-md">
+                <i class="fa-solid fa-house text-amber-400"></i> Home
+            </button>
+            <button id="soundToggleBtn" onclick="toggleSound()" class="bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white px-3 py-1.5 rounded-xl text-xs md:text-sm font-semibold transition flex items-center gap-2 shadow-md">
+                <i id="soundIcon" class="fa-solid fa-volume-high text-emerald-400"></i>
+                <span id="soundText">Musik : ON</span>
+            </button>
+            <button onclick="toggleFullscreen()" class="bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white px-3 py-1.5 rounded-xl text-xs md:text-sm font-semibold transition flex items-center gap-1.5 shadow-md">
+                <i class="fa-solid fa-expand text-blue-400"></i> Layar Penuh
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="w-full max-w-5xl mx-auto px-4 py-4 flex-grow flex items-center justify-center relative">
+
+        <!-- SCREEN 1 : COVER SCREEN -->
+        <div id="coverScreen" class="w-full flex flex-col items-center justify-center text-center py-6 space-y-6">
+            <!-- Foto Profil Guru / Logo -->
+            <div class="relative">
+                <div class="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-emerald-400 p-1 bg-slate-800/80 shadow-2xl backdrop-blur-sm">
+                    <img src="lehan.jpg" alt="Foto Pak Guru" class="w-full h-full object-cover rounded-full" onerror="this.src='https://placehold.co/200x200/10b981/ffffff?text=👨‍🏫+Pak+Lehan'">
+                </div>
+                <div class="absolute -bottom-2 right-2 bg-amber-400 text-slate-900 rounded-full p-2.5 text-sm font-black shadow-lg">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+            </div>
+
+            <!-- Judul & Subjudul -->
+            <div class="space-y-2">
+                <h1 class="text-3xl md:text-5xl font-black tracking-wider text-white drop-shadow-lg">
+                    BALAP MOBIL PANCASILA
+                </h1>
+                <p class="text-amber-400 font-extrabold text-lg md:text-2xl tracking-widest uppercase">
+                    KELAS 5 SD
+                </p>
+                <div class="pt-1">
+                    <span class="text-slate-300 font-bold text-sm md:text-base tracking-wide bg-slate-900/80 border border-slate-700 px-5 py-2 rounded-full inline-block shadow-md">
+                        SD NEGERI 2 SENDANG AYU
+                    </span>
+                </div>
+            </div>
+
+            <!-- Lencana Sub-materi -->
+            <div class="bg-indigo-950/70 border border-indigo-500/50 px-6 py-2.5 rounded-full text-indigo-200 text-sm md:text-base font-bold backdrop-blur-md shadow-md">
+                Pertemuan : Hubungan Antarsila dalam Pancasila
+            </div>
+
+            <!-- Tombol Mulai Bermain -->
+            <div class="pt-4">
+                <button onclick="showStudentForm()" class="btn-orange-glow bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600 text-white font-extrabold text-xl md:text-2xl px-12 py-4 rounded-full shadow-2xl border-2 border-orange-300 flex items-center gap-3">
+                    MULAI BERMAIN <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- SCREEN 2 : FORM DATA DIRI SISWA -->
+        <div id="studentFormScreen" class="hidden w-full max-w-md bg-white text-slate-800 rounded-3xl p-8 shadow-2xl border-t-8 border-indigo-900 relative modal-animate">
+            <div class="text-center space-y-2 mb-6">
+                <h2 class="text-2xl md:text-3xl font-black text-indigo-950 tracking-tight">Isi Data Diri Dulu Yuk!</h2>
+                <p class="text-slate-500 text-xs md:text-sm font-semibold">Masukkan nama dan kelasmu sebelum memulai balapan</p>
+            </div>
+
+            <form onsubmit="submitStudentData(event)" class="space-y-4">
+                <div>
+                    <label class="block text-slate-700 font-bold text-sm mb-1.5">Nama Lengkap :</label>
+                    <input type="text" id="studentNameInput" required placeholder="Masukkan namamu..." class="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 font-semibold text-slate-800 transition">
+                </div>
+
+                <div>
+                    <label class="block text-slate-700 font-bold text-sm mb-1.5">Kelas :</label>
+                    <input type="text" id="studentClassInput" value="5" required placeholder="5" class="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 font-semibold text-slate-800 transition">
+                </div>
+
+                <div class="pt-4">
+                    <button type="submit" class="w-full bg-indigo-900 hover:bg-indigo-950 text-white font-black text-lg py-4 rounded-xl shadow-lg hover:shadow-xl transition transform active:scale-95 flex items-center justify-center gap-2">
+                        LANJUT KE PERMAINAN <i class="fa-solid fa-play"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- SCREEN 3 : DASHBOARD MENU UTAMA -->
+        <div id="mainMenuScreen" class="hidden w-full max-w-3xl bg-slate-900/90 border border-slate-700 rounded-3xl p-6 md:p-8 backdrop-blur-xl shadow-2xl modal-animate">
+            <div class="flex items-center justify-between mb-6 border-b border-slate-800 pb-4">
+                <div>
+                    <h2 class="text-2xl font-black text-white flex items-center gap-2">
+                        <i class="fa-solid fa-car-side text-orange-400"></i> Menu Utama Balapan
+                    </h2>
+                    <p class="text-xs text-slate-400 font-semibold mt-1">Pemain : <span id="playerNameDisplay" class="text-amber-400 font-bold">Siswa</span> (Kelas : <span id="playerClassDisplay">5</span>)</p>
+                </div>
+                <button onclick="showCover()" class="text-xs bg-slate-800 hover:bg-slate-700 border border-slate-600 px-3 py-2 rounded-xl font-bold text-slate-300 transition">
+                    <i class="fa-solid fa-user-pen"></i> Ganti Nama
+                </button>
+            </div>
+
+            <!-- Pemilihan Level Game -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div onclick="selectLevel(1)" id="lvlBtn1" class="level-card cursor-pointer bg-slate-800/90 border-2 border-emerald-500 rounded-2xl p-4 transition flex items-center gap-4 hover:border-emerald-400">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/20 border border-emerald-400/50 flex items-center justify-center text-emerald-400 font-black text-xl">
+                        1
+                    </div>
+                    <div>
+                        <h3 class="font-black text-emerald-400 text-base">Level 1 : Pelan & Santai</h3>
+                        <p class="text-xs text-slate-300">Laju mobil lambat, timer 60 detik, soal dasar.</p>
+                    </div>
+                </div>
+
+                <div onclick="selectLevel(2)" id="lvlBtn2" class="level-card cursor-pointer bg-slate-800/40 opacity-80 border-2 border-slate-700 rounded-2xl p-4 transition flex items-center gap-4 hover:border-amber-400">
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/20 border border-amber-400/50 flex items-center justify-center text-amber-400 font-black text-xl">
+                        2
+                    </div>
+                    <div>
+                        <h3 class="font-black text-amber-400 text-base">Level 2 : Sedang</h3>
+                        <p class="text-xs text-slate-300">Laju mobil sedang, timer 60 detik, rintangan ringan.</p>
+                    </div>
+                </div>
+
+                <div onclick="selectLevel(3)" id="lvlBtn3" class="level-card cursor-pointer bg-slate-800/40 opacity-80 border-2 border-slate-700 rounded-2xl p-4 transition flex items-center gap-4 hover:border-rose-400">
+                    <div class="w-12 h-12 rounded-xl bg-rose-500/20 border border-rose-400/50 flex items-center justify-center text-rose-400 font-black text-xl">
+                        3
+                    </div>
+                    <div>
+                        <h3 class="font-black text-rose-400 text-base">Level 3 : Balap HOTS</h3>
+                        <p class="text-xs text-slate-300">Kecepatan bertambah sedikit, timer 60 detik.</p>
+                    </div>
+                </div>
+
+                <div onclick="showMaterialModal()" class="cursor-pointer bg-indigo-900/50 hover:bg-indigo-800/60 border-2 border-indigo-500/60 rounded-2xl p-4 transition flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-500/20 border border-indigo-400/50 flex items-center justify-center text-indigo-300 font-black text-xl">
+                        <i class="fa-solid fa-book-open"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-black text-indigo-300 text-base">Materi Rangkuman</h3>
+                        <p class="text-xs text-slate-300">Pelajari hubungan antarsila Pancasila sebelum balapan!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tombol Aksi Tambahan -->
+            <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-800">
+                <div class="flex gap-2">
+                    <button onclick="showInstructionsModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs md:text-sm font-bold px-4 py-2.5 rounded-xl border border-slate-700 transition">
+                        <i class="fa-solid fa-circle-info text-blue-400"></i> Petunjuk
+                    </button>
+                    <button onclick="showHighscoreModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs md:text-sm font-bold px-4 py-2.5 rounded-xl border border-slate-700 transition">
+                        <i class="fa-solid fa-trophy text-amber-400"></i> Skor Tertinggi
+                    </button>
+                </div>
+
+                <button onclick="startRacingGame()" class="btn-orange-glow ml-auto bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-black px-8 py-3 rounded-xl text-base shadow-xl flex items-center gap-2">
+                    MULAI BALAPAN <i class="fa-solid fa-flag-checkered"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- SCREEN 4 : AREA GAMEPLAY CANVAS -->
+        <div id="gameplayScreen" class="hidden w-full h-[78vh] max-h-[660px] relative flex flex-col items-center justify-center rounded-3xl overflow-hidden border-2 border-slate-700 shadow-2xl">
+            <!-- HUD BAR ATAS -->
+            <div class="absolute top-3 left-3 right-3 z-10 bg-slate-900/85 backdrop-blur-md rounded-2xl px-4 py-2 border border-slate-700 flex items-center justify-between shadow-xl text-xs md:text-sm font-extrabold">
+                <div class="flex items-center gap-3">
+                    <button onclick="goHome()" title="Kembali ke Home" class="bg-slate-800 hover:bg-slate-700 border border-slate-600 text-amber-400 px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 shadow-sm">
+                        <i class="fa-solid fa-house"></i> Home
+                    </button>
+                    <div id="hudLives" class="flex items-center gap-1 text-rose-500 text-base">
+                        ❤️❤️❤️
+                    </div>
+                    <div class="text-amber-400 flex items-center gap-1">
+                        <i class="fa-solid fa-star"></i> <span id="hudScore">0</span>
+                    </div>
+                    <div class="text-yellow-300 flex items-center gap-1 hidden sm:flex">
+                        <i class="fa-solid fa-coins"></i> <span id="hudCoins">0</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <div class="text-slate-300 flex items-center gap-1">
+                        <i class="fa-solid fa-gauge-high text-cyan-400"></i> <span id="hudSpeed">30</span> km/h
+                    </div>
+                    <div class="w-24 md:w-36 bg-slate-800 rounded-full h-3 border border-slate-700 relative overflow-hidden">
+                        <div id="hudProgressBar" class="bg-gradient-to-r from-emerald-500 to-cyan-400 h-full w-0 transition-all duration-300"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CANVAS LINTASAN -->
+            <canvas id="gameCanvas" class="w-full h-full block bg-slate-950"></canvas>
+
+            <!-- KONTROL VIRTUAL HP / TABLET -->
+            <div class="absolute bottom-4 left-4 right-4 z-10 flex justify-between items-center pointer-events-none md:hidden">
+                <div class="flex gap-3 pointer-events-auto">
+                    <button id="btnLeft" class="w-14 h-14 bg-slate-900/80 active:bg-blue-600 border-2 border-slate-600 text-white rounded-2xl text-2xl font-black flex items-center justify-center shadow-2xl backdrop-blur-sm">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <button id="btnRight" class="w-14 h-14 bg-slate-900/80 active:bg-blue-600 border-2 border-slate-600 text-white rounded-2xl text-2xl font-black flex items-center justify-center shadow-2xl backdrop-blur-sm">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="pointer-events-auto">
+                    <button id="btnBoost" class="w-16 h-14 bg-amber-500/90 active:bg-amber-600 border-2 border-amber-300 text-slate-950 rounded-2xl text-base font-black flex items-center justify-center gap-1 shadow-2xl backdrop-blur-sm">
+                        <i class="fa-solid fa-bolt"></i> BOOST
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- MODAL SOAL PERTANYAAN -->
+    <div id="quizModal" class="hidden fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="w-full max-w-2xl bg-slate-900 border-2 border-amber-400/80 rounded-3xl p-6 md:p-8 shadow-2xl relative text-slate-100 flex flex-col space-y-4 modal-animate">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <span id="questionCategory" class="bg-amber-500/20 text-amber-300 border border-amber-400/40 px-3 py-1 rounded-full text-xs font-bold">
+                    <i class="fa-solid fa-book"></i> HUBUNGAN ANTARSILA
+                </span>
+                <div class="flex items-center gap-2 bg-slate-800 px-3 py-1 rounded-full border border-slate-700">
+                    <i class="fa-solid fa-stopwatch text-rose-400 animate-pulse"></i>
+                    <span id="quizTimerText" class="font-black text-rose-400 text-base">60s</span>
+                </div>
+            </div>
+
+            <div class="py-2">
+                <h3 id="questionText" class="text-base md:text-lg font-bold text-white leading-relaxed">
+                    Pertanyaan akan muncul di sini...
+                </h3>
+            </div>
+
+            <div id="quizOptionsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
+                <!-- Opsi Jawaban Dinamis -->
+            </div>
+
+            <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden border border-slate-700 mt-2">
+                <div id="quizTimerBar" class="bg-rose-500 h-full w-full transition-all duration-1000 ease-linear"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL MATERI -->
+    <div id="materialModal" class="hidden fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="w-full max-w-3xl max-h-[85vh] bg-slate-900 border border-slate-700 rounded-3xl p-6 md:p-8 shadow-2xl flex flex-col space-y-4 text-slate-200 modal-animate">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-4">
+                <h3 class="text-xl font-black text-amber-400 flex items-center gap-2">
+                    <i class="fa-solid fa-book-bookmark"></i> Rangkuman Materi : Pancasila Satu Kesatuan Utuh
+                </h3>
+                <button onclick="closeMaterialModal()" class="text-slate-400 hover:text-white text-xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="overflow-y-auto space-y-4 pr-2 text-sm leading-relaxed">
+                <div class="bg-slate-800/60 p-4 rounded-2xl border border-slate-700">
+                    <h4 class="font-black text-base text-emerald-400 mb-2">🇮🇩 Pancasila Sebagai Satu Kesatuan Utuh</h4>
+                    <p>Pancasila adalah dasar negara Indonesia yang terdiri dari lima sila. Kelima sila ini tidak berdiri sendiri, melainkan saling berhubungan dan membentuk satu kesatuan yang utuh. Seperti Burung Garuda Pancasila yang memegang pita bertuliskan <i>Bhinneka Tunggal Ika</i>, setiap sila memiliki peran yang saling melengkapi.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div class="bg-slate-800/60 p-4 rounded-2xl border border-slate-700">
+                        <h5 class="font-bold text-amber-300 mb-1">⭐ Sila 1 & Sila 2 :</h5>
+                        <p class="text-xs text-slate-300">Sila pertama (Ketuhanan) mengajarkan kita bertakwa. Dengan takwa, kita tergerak mengamalkan sila kedua (Kemanusiaan) untuk memperlakukan sesama secara adil dan beradab.</p>
+                    </div>
+
+                    <div class="bg-slate-800/60 p-4 rounded-2xl border border-slate-700">
+                        <h5 class="font-bold text-amber-300 mb-1">🌳 Sila 3 & Sila 4 :</h5>
+                        <p class="text-xs text-slate-300">Persatuan Indonesia (Sila 3) diperkuat melalui musyawarah mufakat (Sila 4). Saat bermusyawarah, kita menghargai pendapat dan menjaga persatuan bangsa.</p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-800/60 p-4 rounded-2xl border border-slate-700">
+                    <h5 class="font-bold text-amber-300 mb-1">⚖️ Hubungan Sila 5 dengan Sila Lainnya :</h5>
+                    <p class="text-xs text-slate-300">Keadilan sosial bagi seluruh rakyat Indonesia (Sila 5) menjadi tujuan akhir dari semua sila. Keadilan terwujud jika kita memelihara musyawarah (Sila 4), kemanusiaan (Sila 2), persatuan (Sila 3), dan berlandaskan rasa syukur kepada Tuhan (Sila 1).</p>
+                </div>
+
+                <div class="bg-indigo-900/40 p-4 rounded-2xl border border-indigo-500/40">
+                    <h5 class="font-bold text-indigo-300 mb-1">🏫 Contoh Nyata : Pemilihan Ketua Kelas</h5>
+                    <p class="text-xs text-slate-200">Saat memilih ketua kelas, siswa melakukan musyawarah (Sila 4) untuk mufakat yang adil (Sila 5). Keputusan dijiwai rasa kemanusiaan (Sila 2), persatuan teman (Sila 3), serta niat jujur karena Tuhan (Sila 1).</p>
+                </div>
+            </div>
+
+            <button onclick="closeMaterialModal()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition">
+                Paham! Kembali ke Menu
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL PETUNJUK -->
+    <div id="instructionsModal" class="hidden fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="w-full max-w-lg bg-slate-900 border border-slate-700 rounded-3xl p-6 shadow-2xl space-y-4 text-slate-200 modal-animate">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <h3 class="text-lg font-black text-amber-400"><i class="fa-solid fa-gamepad"></i> Petunjuk Kontrol</h3>
+                <button onclick="closeInstructionsModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="space-y-3 text-sm">
+                <p>🎮 <b>Komputer/Laptop :</b> Gunakan tombol panah Kiri/Kanan atau A/D untuk berpindah jalur. Panah Atas/W untuk Boost.</p>
+                <p>📱 <b>HP/Tablet/Interactive Board :</b> Gunakan tombol panah virtual di layar atau sentuh jalur kiri/kanan.</p>
+                <p>❓ <b>Kotak Pertanyaan (?) :</b> Tabrak kotak pertanyaan untuk menjawab soal. Waktu menjawab adalah <b>1 Menit (60 detik)</b>.</p>
+                <p>🪙 <b>Koin & Bintang :</b> Ambil koin (+10 poin) dan Bintang (+50 poin).</p>
+                <p>⚠️ <b>Rintangan :</b> Hindari penghalang warna merah agar nyawa tidak berkurang!</p>
+            </div>
+            <button onclick="closeInstructionsModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-xl">Tutup</button>
+        </div>
+    </div>
+
+    <!-- MODAL SKOR TERTINGGI -->
+    <div id="highscoreModal" class="hidden fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="w-full max-w-md bg-slate-900 border border-slate-700 rounded-3xl p-6 shadow-2xl space-y-4 text-slate-200 modal-animate">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <h3 class="text-lg font-black text-amber-400"><i class="fa-solid fa-trophy"></i> Skor Tertinggi Saya</h3>
+                <button onclick="closeHighscoreModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="highscoreContent" class="space-y-2 text-center py-4">
+                <!-- Injected via JS -->
+            </div>
+            <button onclick="closeHighscoreModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-xl">Tutup</button>
+        </div>
+    </div>
+
+    <!-- MODAL HASIL AKHIR -->
+    <div id="resultModal" class="hidden fixed inset-0 bg-slate-950/90 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="w-full max-w-xl bg-slate-900 border-2 border-emerald-500 rounded-3xl p-6 md:p-8 shadow-2xl text-center space-y-5 text-slate-100 modal-animate">
+            <div class="space-y-1">
+                <h2 id="resultTitle" class="text-3xl font-black text-emerald-400">🎉 SELAMAT!</h2>
+                <p id="resultSubtitle" class="text-sm text-slate-300">Kamu telah menyelesaikan balapan Pancasila!</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div class="bg-slate-800 p-3 rounded-2xl border border-slate-700">
+                    <p class="text-xs text-slate-400">Total Skor :</p>
+                    <p id="resScore" class="text-xl font-black text-amber-400">0</p>
+                </div>
+                <div class="bg-slate-800 p-3 rounded-2xl border border-slate-700">
+                    <p class="text-xs text-slate-400">Jawaban Benar :</p>
+                    <p id="resCorrect" class="text-xl font-black text-emerald-400">0</p>
+                </div>
+                <div class="bg-slate-800 p-3 rounded-2xl border border-slate-700">
+                    <p class="text-xs text-slate-400">Akurasi :</p>
+                    <p id="resAccuracy" class="text-xl font-black text-cyan-400">0%</p>
+                </div>
+                <div class="bg-slate-800 p-3 rounded-2xl border border-slate-700">
+                    <p class="text-xs text-slate-400">Bintang :</p>
+                    <p id="resStars" class="text-xl font-black text-yellow-300">⭐⭐⭐</p>
+                </div>
+            </div>
+
+            <div id="certificateContainer" class="hidden pt-2">
+                <button onclick="showCertificateView()" class="w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-black py-3 rounded-xl shadow-lg flex items-center justify-center gap-2 text-base">
+                    🏆 TAMPILKAN SERTIFIKAT JUARA PANCASILA
+                </button>
+            </div>
+
+            <div class="flex gap-3 pt-2">
+                <button onclick="restartGame()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 rounded-xl border border-slate-700">
+                    <i class="fa-solid fa-rotate-right"></i> Main Lagi
+                </button>
+                <button onclick="backToMainMenu()" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl">
+                    <i class="fa-solid fa-house"></i> Menu Utama
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL SERTIFIKAT -->
+    <div id="certificateModal" class="hidden fixed inset-0 bg-slate-950/95 z-50 flex items-center justify-center p-4 overflow-y-auto">
+        <div class="w-full max-w-2xl bg-amber-50 border-8 border-amber-600 rounded-3xl p-6 md:p-10 text-slate-900 shadow-2xl relative text-center space-y-4 modal-animate">
+            <button onclick="closeCertificateView()" class="absolute top-4 right-4 text-slate-500 hover:text-slate-900 text-2xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="border-2 border-dashed border-amber-800/40 p-6 rounded-2xl">
+                <div class="flex justify-center text-4xl text-amber-600 mb-2">
+                    <i class="fa-solid fa-award"></i>
+                </div>
+                <h2 class="text-2xl md:text-3xl font-black text-amber-900 uppercase tracking-widest">SERTIFIKAT PENGHARGAAN</h2>
+                <p class="text-xs md:text-sm font-bold text-slate-600 tracking-wider uppercase mt-1">JUARA BALAP EDUKASI PANCASILA</p>
+                
+                <p class="text-xs text-slate-500 mt-4">Diberikan secara bangga kepada :</p>
+                <h3 id="certStudentName" class="text-2xl md:text-3xl font-black text-indigo-950 underline decoration-amber-500 decoration-4 my-1">
+                    NAMA SISWA
+                </h3>
+                <p class="text-xs font-semibold text-slate-600">Siswa Kelas <span id="certStudentClass">5</span> - SD Negeri 2 Sendang Ayu</p>
+
+                <p class="text-xs md:text-sm text-slate-700 my-4 max-w-lg mx-auto leading-relaxed">
+                    Telah berhasil menguasai materi <b>Hubungan Antarsila dalam Pancasila sebagai Satu Kesatuan</b> dengan hasil kelulusan yang sangat memuaskan.
+                </p>
+
+                <div class="flex justify-around items-center pt-4 border-t border-amber-200 text-xs">
+                    <div>
+                        <p class="text-slate-500">Skor Akhir :</p>
+                        <p id="certScore" class="font-black text-amber-700 text-lg">0</p>
+                    </div>
+                    <div>
+                        <p class="text-slate-500">Akurasi Soal :</p>
+                        <p id="certAccuracy" class="font-black text-emerald-700 text-lg">0%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER PERMANEN -->
+    <footer class="w-full text-center py-3 text-slate-400 text-xs z-10 border-t border-slate-800/60 bg-slate-950/40 backdrop-blur-sm font-semibold">
+        Copyright (c) 2026 - Created By Pak LEhan
+    </footer>
+
+    <script>
+        /* WEB AUDIO SYNTHESIZER UNTUK SOUND EFFECT & BACKGROUND MUSIC (OFFLINE 100%) */
+        let audioCtx = null;
+        let isSoundOn = true;
+        let bgmInterval = null;
+        let bgmNoteIndex = 0;
+
+        function initAudio() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        /* Melodi BGM Ceria Sintetis */
+        const bgmNotes = [261.63, 329.63, 392.00, 523.25, 392.00, 329.63, 293.66, 349.23, 440.00, 523.25, 440.00, 349.23];
+        
+        function startBGM() {
+            if (!isSoundOn || bgmInterval) return;
+            initAudio();
+            bgmNoteIndex = 0;
+
+            bgmInterval = setInterval(() => {
+                if (!isSoundOn || !audioCtx) return;
+                try {
+                    const now = audioCtx.currentTime;
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(bgmNotes[bgmNoteIndex], now);
+
+                    gain.gain.setValueAtTime(0.05, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+
+                    osc.start(now);
+                    osc.stop(now + 0.25);
+
+                    bgmNoteIndex = (bgmNoteIndex + 1) % bgmNotes.length;
+                } catch (e) {
+                    console.log("BGM Audio Error :", e);
+                }
+            }, 300);
+        }
+
+        function stopBGM() {
+            if (bgmInterval) {
+                clearInterval(bgmInterval);
+                bgmInterval = null;
+            }
+        }
+
+        function playSound(type) {
+            if (!isSoundOn) return;
+            try {
+                initAudio();
+                const now = audioCtx.currentTime;
+
+                if (type === 'coin') {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(987.77, now);
+                    osc.frequency.setValueAtTime(1318.51, now + 0.08);
+                    gain.gain.setValueAtTime(0.3, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.25);
+                } else if (type === 'star') {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(523.25, now);
+                    osc.frequency.setValueAtTime(659.25, now + 0.08);
+                    osc.frequency.setValueAtTime(783.99, now + 0.16);
+                    gain.gain.setValueAtTime(0.3, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.4);
+                } else if (type === 'correct') {
+                    [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
+                        const osc = audioCtx.createOscillator();
+                        const gain = audioCtx.createGain();
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+                        gain.gain.setValueAtTime(0.25, now + idx * 0.08);
+                        gain.gain.exponentialRampToValueAtTime(0.01, now + idx * 0.08 + 0.2);
+                        osc.connect(gain);
+                        gain.connect(audioCtx.destination);
+                        osc.start(now + idx * 0.08);
+                        osc.stop(now + idx * 0.08 + 0.2);
+                    });
+                } else if (type === 'wrong') {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(180, now);
+                    osc.frequency.linearRampToValueAtTime(110, now + 0.3);
+                    gain.gain.setValueAtTime(0.3, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.35);
+                } else if (type === 'crash') {
+                    const bufferSize = audioCtx.sampleRate * 0.25;
+                    const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                    const data = buffer.getChannelData(0);
+                    for (let i = 0; i < bufferSize; i++) {
+                        data[i] = Math.random() * 2 - 1;
+                    }
+                    const noise = audioCtx.createBufferSource();
+                    noise.buffer = buffer;
+                    const gain = audioCtx.createGain();
+                    gain.gain.setValueAtTime(0.4, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+                    noise.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    noise.start(now);
+                } else if (type === 'boost') {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(300, now);
+                    osc.frequency.exponentialRampToValueAtTime(900, now + 0.3);
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.35);
+                }
+            } catch (e) {
+                console.log("Audio notice :", e);
+            }
+        }
+
+        function toggleSound() {
+            isSoundOn = !isSoundOn;
+            document.getElementById('soundText').innerText = isSoundOn ? 'Musik : ON' : 'Musik : OFF';
+            document.getElementById('soundIcon').className = isSoundOn ? 'fa-solid fa-volume-high text-emerald-400' : 'fa-solid fa-volume-xmark text-rose-400';
+            localStorage.setItem('pancasila_sound', isSoundOn ? '1' : '0');
+
+            if (isSoundOn) {
+                startBGM();
+            } else {
+                stopBGM();
+            }
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {});
+            } else {
+                if (document.exitFullscreen) document.exitFullscreen();
+            }
+        }
+
+        /* BANK SOAL 100+ HUBUNGAN ANTARSILA PANCASILA */
+        const questionBank = [];
+
+        function generateQuestions() {
+            const items = [
+                { q: "Bagaimana hubungan antara Sila ke-1 dan Sila ke-2 Pancasila?", opt: ["Takwa kepada Tuhan mendorong kita memperlakukan manusia secara adil dan beradab", "Sila ke-1 hanya mengatur ibadah pribadi tanpa peduli sesama", "Sila ke-2 tidak membutuhkan landasan nilai ketuhanan", "Sila ke-1 dan Sila ke-2 tidak ada hubungannya"], a: 0, cat: "Sila 1 & Sila 2" },
+                { q: "Menghormati teman yang sedang beribadah sesuai agamanya adalah pengamalan Sila ke-1 yang melandasi...", opt: ["Kemanusiaan yang adil dan beradab (Sila 2)", "Persatuan tanpa toleransi", "Keadilan sosial tanpa rasa hormat", "Hanya aturan sekolah"], a: 0, cat: "Sila 1 & Sila 2" },
+                { q: "Benar atau Salah : Kasih sayang terhadap sesama manusia (Sila 2) timbul karena rasa syukur kita kepada Tuhan (Sila 1).", opt: ["BENAR", "SALAH"], a: 0, cat: "Sila 1 & Sila 2" },
+                { q: "Mengapa musyawarah (Sila 4) sangat penting untuk menjaga persatuan Indonesia (Sila 3)?", opt: ["Musyawarah menghargai perbedaan pendapat sehingga mencegah perpecahan", "Musyawarah dilakukan untuk memaksakan kehendak ketua", "Musyawarah hanya buang-buang waktu", "Musyawarah membeda-bedakan suku"], a: 0, cat: "Sila 3 & Sila 4" },
+                { q: "Saat pemilihan ketua kelas, kita mengutamakan musyawarah mufakat. Hal ini mencerminkan keterkaitan antara Sila...", opt: ["Sila ke-4 dan Sila ke-3", "Sila ke-1 dan Sila ke-5 saja", "Hanya Sila ke-2", "Tidak ada hubungannya"], a: 0, cat: "Sila 3 & Sila 4" },
+                { q: "Benar atau Salah : Keputusan musyawarah harus ditaati bersama demi menjaga persatuan bangsa.", opt: ["BENAR", "SALAH"], a: 0, cat: "Sila 3 & Sila 4" },
+                { q: "Keadilan sosial bagi seluruh rakyat Indonesia (Sila 5) dapat dicapai apabila kita...", opt: ["Menerapkan nilai ketuhanan, kemanusiaan, persatuan, dan musyawarah", "Hanya mementingkan kelompok sendiri", "Mengabaikan hak orang lain", "Hanya bekerja tanpa aturan"], a: 0, cat: "Sila 5 & Semua Sila" },
+                { q: "Membagi tugas kelompok piket kelas secara adil adalah contoh mewujudkan Sila ke-5 yang dilandasi oleh Sila...", opt: ["Sila ke-2 (Kemanusiaan) dan Sila ke-3 (Persatuan)", "Hanya kehendak guru", "Perasaan tidak suka", "Keinginan pribadi"], a: 0, cat: "Sila 5 & Semua Sila" },
+                { q: "Dalam pemilihan ketua kelas, keputusan yang adil (Sila 5) dihasilkan dari musyawarah (Sila 4), dilandasi persatuan (Sila 3), kemanusiaan (Sila 2), dan amanah Tuhan (Sila 1). Hal ini membuktikan bahwa Pancasila bersifat...", opt: ["Satu kesatuan yang utuh dan saling terkait", "Terpisah-pisah sesuai keinginan", "Hanya berlaku saat upacara", "Bisa diganti kapan saja"], a: 0, cat: "Kesatuan Pancasila" },
+                { q: "Simbol Burung Garuda memegang pita bertuliskan 'Bhinneka Tunggal Ika'. Apa hubungannya dengan Pancasila?", opt: ["Mencerminkan bahwa lima sila Pancasila menyatukan keragaman bangsa Indonesia", "Hanya hiasan lambang negara", "Menunjukkan kekuatan militer", "Menandakan lomba balap"], a: 0, cat: "Lambang Negara" },
+                { q: "Apa yang terjadi jika suatu bangsa menerapkan Sila ke-3 (Persatuan) tanpa Sila ke-2 (Kemanusiaan)?", opt: ["Persatuan dapat berubah menjadi pemaksaan yang tidak adil bagi kelompok lain", "Bangsa akan langsung maju pesat", "Tidak ada pengaruhnya", "Semua orang akan senang"], a: 0, cat: "Analisis Sila" },
+                { q: "Mengapa Sila Pertama (Ketuhanan Yang Maha Esa) diletakkan di urutan paling pertama?", opt: ["Mendasari dan menjiwai keempat sila lainnya", "Hanya karena urutan nomor", "Agar mudah dihafal", "Tidak memiliki alasan khusus"], a: 0, cat: "Landasan Utama" }
+            ];
+
+            for (let i = 0; i < 100; i++) {
+                const base = items[i % items.length];
+                questionBank.push({
+                    id: i + 1,
+                    q: `[Soal ${i + 1}] : ${base.q}`,
+                    opt: [...base.opt],
+                    a: base.a,
+                    cat: base.cat
+                });
+            }
+        }
+        generateQuestions();
+
+        let studentData = { name: "Siswa SD", class: "5" };
+        let currentLevel = 1;
+        let gameScore = 0;
+        let gameCoins = 0;
+        let gameLives = 3;
+        let correctCount = 0;
+        let wrongCount = 0;
+        let isGameRunning = false;
+        let usedQuestions = [];
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedName = localStorage.getItem('pancasila_student_name');
+            const savedClass = localStorage.getItem('pancasila_student_class');
+            const savedSound = localStorage.getItem('pancasila_sound');
+
+            if (savedName) studentData.name = savedName;
+            if (savedClass) studentData.class = savedClass;
+            if (savedSound === '0') {
+                isSoundOn = false;
+                document.getElementById('soundText').innerText = 'Musik : OFF';
+                document.getElementById('soundIcon').className = 'fa-solid fa-volume-xmark text-rose-400';
+            }
+
+            document.getElementById('studentNameInput').value = studentData.name !== 'Siswa SD' ? studentData.name : '';
+            document.getElementById('studentClassInput').value = studentData.class;
+            updatePlayerDisplay();
+        });
+
+        function updatePlayerDisplay() {
+            document.getElementById('playerNameDisplay').innerText = studentData.name;
+            document.getElementById('playerClassDisplay').innerText = studentData.class;
+        }
+
+        function goHome() {
+            isGameRunning = false;
+            if (typeof quizTimerInterval !== 'undefined' && quizTimerInterval) {
+                clearInterval(quizTimerInterval);
+            }
+            showCover();
+        }
+
+        function showCover() {
+            isGameRunning = false;
+            stopBGM();
+            hideAllScreens();
+            document.getElementById('coverScreen').classList.remove('hidden');
+        }
+
+        function showStudentForm() {
+            initAudio();
+            startBGM();
+            hideAllScreens();
+            document.getElementById('studentFormScreen').classList.remove('hidden');
+        }
+
+        function submitStudentData(e) {
+            e.preventDefault();
+            initAudio();
+            startBGM();
+            const name = document.getElementById('studentNameInput').value.trim();
+            const cls = document.getElementById('studentClassInput').value.trim();
+
+            if (name) studentData.name = name;
+            if (cls) studentData.class = cls;
+
+            localStorage.setItem('pancasila_student_name', studentData.name);
+            localStorage.setItem('pancasila_student_class', studentData.class);
+
+            updatePlayerDisplay();
+            showMainMenu();
+            playSound('coin');
+        }
+
+        function showMainMenu() {
+            hideAllScreens();
+            document.getElementById('mainMenuScreen').classList.remove('hidden');
+            startBGM();
+        }
+
+        function selectLevel(lvl) {
+            currentLevel = lvl;
+            [1, 2, 3].forEach(l => {
+                const btn = document.getElementById(`lvlBtn${l}`);
+                if (l === lvl) {
+                    btn.classList.remove('opacity-80', 'bg-slate-800/40');
+                    btn.classList.add('bg-slate-800/90', 'border-emerald-500');
+                } else {
+                    btn.classList.add('opacity-80', 'bg-slate-800/40');
+                    btn.classList.remove('bg-slate-800/90', 'border-emerald-500');
+                }
+            });
+            playSound('coin');
+        }
+
+        function showMaterialModal() {
+            document.getElementById('materialModal').classList.remove('hidden');
+            playSound('coin');
+        }
+        function closeMaterialModal() {
+            document.getElementById('materialModal').classList.add('hidden');
+        }
+
+        function showInstructionsModal() {
+            document.getElementById('instructionsModal').classList.remove('hidden');
+            playSound('coin');
+        }
+        function closeInstructionsModal() {
+            document.getElementById('instructionsModal').classList.add('hidden');
+        }
+
+        function showHighscoreModal() {
+            const hs = localStorage.getItem('pancasila_highscore') || '0';
+            document.getElementById('highscoreContent').innerHTML = `
+                <i class="fa-solid fa-trophy text-5xl text-amber-400 mb-2"></i>
+                <p class="text-sm text-slate-400">Skor Tertinggi Rekor Anda :</p>
+                <p class="text-3xl font-black text-amber-400">${hs} Poin</p>
+            `;
+            document.getElementById('highscoreModal').classList.remove('hidden');
+            playSound('coin');
+        }
+        function closeHighscoreModal() {
+            document.getElementById('highscoreModal').classList.add('hidden');
+        }
+
+        function hideAllScreens() {
+            document.getElementById('coverScreen').classList.add('hidden');
+            document.getElementById('studentFormScreen').classList.add('hidden');
+            document.getElementById('mainMenuScreen').classList.add('hidden');
+            document.getElementById('gameplayScreen').classList.add('hidden');
+            document.getElementById('resultModal').classList.add('hidden');
+            document.getElementById('quizModal').classList.add('hidden');
+        }
+
+        /* ENGINE MESIN BALAP CANVAS */
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let roadOffset = 0;
+        /* Kecepatan dibuat jauh lebih pelan & lambat */
+        let baseSpeed = 2.0;
+        let currentSpeed = 2.0;
+        let isBoosted = false;
+        let boostTimer = 0;
+
+        let playerCar = {
+            lane: 1,
+            x: 0,
+            y: 0,
+            width: 44,
+            height: 75
+        };
+
+        let gameObjects = [];
+        let levelProgress = 0;
+        const levelGoal = 1000;
+
+        function resizeCanvas() {
+            const container = document.getElementById('gameplayScreen');
+            canvas.width = container.clientWidth;
+            canvas.height = container.clientHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+
+        function startRacingGame() {
+            initAudio();
+            startBGM();
+            hideAllScreens();
+            document.getElementById('gameplayScreen').classList.remove('hidden');
+            resizeCanvas();
+
+            /* Pengaturan Kecepatan Pelan */
+            if (currentLevel === 1) baseSpeed = 2.0;
+            else if (currentLevel === 2) baseSpeed = 2.8;
+            else baseSpeed = 3.5;
+
+            currentSpeed = baseSpeed;
+            gameScore = 0;
+            gameCoins = 0;
+            gameLives = 3;
+            correctCount = 0;
+            wrongCount = 0;
+            levelProgress = 0;
+            gameObjects = [];
+            usedQuestions = [];
+            isGameRunning = true;
+
+            playerCar.lane = 1;
+            playerCar.y = canvas.height - 110;
+
+            updateHUD();
+            initControls();
+            requestAnimationFrame(gameLoop);
+        }
+
+        function updateHUD() {
+            let hearts = '';
+            for (let i = 0; i < 3; i++) {
+                hearts += i < gameLives ? '❤️' : '🖤';
+            }
+            document.getElementById('hudLives').innerText = hearts;
+            document.getElementById('hudScore').innerText = gameScore;
+            document.getElementById('hudCoins').innerText = gameCoins;
+            document.getElementById('hudSpeed').innerText = Math.round(currentSpeed * 12);
+            
+            const pct = Math.min(100, Math.floor((levelProgress / levelGoal) * 100));
+            document.getElementById('hudProgressBar').style.width = `${pct}%`;
+        }
+
+        let spawnTimer = 0;
+        function spawnEntities() {
+            spawnTimer++;
+            if (spawnTimer > 90) {
+                spawnTimer = 0;
+                const lane = Math.floor(Math.random() * 3);
+                const rand = Math.random();
+
+                if (rand < 0.30) {
+                    gameObjects.push({ type: 'question', lane: lane, y: -80 });
+                } else if (rand < 0.60) {
+                    gameObjects.push({ type: 'coin', lane: lane, y: -50 });
+                } else if (rand < 0.75) {
+                    gameObjects.push({ type: 'star', lane: lane, y: -50 });
+                } else {
+                    gameObjects.push({ type: 'obstacle', lane: lane, y: -60 });
+                }
+            }
+        }
+
+        function gameLoop() {
+            if (!isGameRunning) return;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (isBoosted) {
+                boostTimer--;
+                if (boostTimer <= 0) {
+                    isBoosted = false;
+                    currentSpeed = baseSpeed;
+                }
+            }
+
+            levelProgress += currentSpeed * 0.15;
+
+            drawRoad();
+            spawnEntities();
+            updateAndDrawObjects();
+            drawPlayerCar();
+
+            if (levelProgress >= levelGoal) {
+                finishGame(true);
+                return;
+            }
+
+            if (gameLives <= 0) {
+                finishGame(false);
+                return;
+            }
+
+            updateHUD();
+            requestAnimationFrame(gameLoop);
+        }
+
+        function drawRoad() {
+            roadOffset = (roadOffset + currentSpeed) % 40;
+
+            /* Rumput pinggir jalan */
+            ctx.fillStyle = '#1e3a29';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            /* Jalan Aspal Utama */
+            const roadWidth = canvas.width * 0.7;
+            const roadLeft = (canvas.width - roadWidth) / 2;
+            ctx.fillStyle = '#334155';
+            ctx.fillRect(roadLeft, 0, roadWidth, canvas.height);
+
+            /* Garis Pembatas Jalur */
+            ctx.strokeStyle = '#f8fafc';
+            ctx.lineWidth = 4;
+            ctx.setLineDash([20, 20]);
+            ctx.lineDashOffset = -roadOffset;
+
+            const laneWidth = roadWidth / 3;
+            for (let i = 1; i < 3; i++) {
+                ctx.beginPath();
+                ctx.moveTo(roadLeft + i * laneWidth, 0);
+                ctx.lineTo(roadLeft + i * laneWidth, canvas.height);
+                ctx.stroke();
+            }
+            ctx.setLineDash([]);
+        }
+
+        function drawPlayerCar() {
+            const roadWidth = canvas.width * 0.7;
+            const roadLeft = (canvas.width - roadWidth) / 2;
+            const laneWidth = roadWidth / 3;
+
+            const targetX = roadLeft + playerCar.lane * laneWidth + laneWidth / 2;
+            playerCar.x += (targetX - playerCar.x) * 0.25;
+
+            ctx.save();
+            ctx.translate(playerCar.x, playerCar.y);
+
+            /* Api Efek Boost */
+            if (isBoosted) {
+                ctx.fillStyle = 'rgba(245, 158, 11, 0.8)';
+                ctx.beginPath();
+                ctx.moveTo(-15, 35);
+                ctx.lineTo(0, 60 + Math.random() * 15);
+                ctx.lineTo(15, 35);
+                ctx.closePath();
+                ctx.fill();
+            }
+
+            /* Bodi Mobil */
+            ctx.fillStyle = isBoosted ? '#f59e0b' : '#3b82f6';
+            ctx.beginPath();
+            ctx.roundRect(-20, -35, 40, 70, 8);
+            ctx.fill();
+
+            /* Kaca Depan Mobil */
+            ctx.fillStyle = '#0f172a';
+            ctx.beginPath();
+            ctx.roundRect(-14, -15, 28, 30, 4);
+            ctx.fill();
+
+            /* Lampu Depan */
+            ctx.fillStyle = '#fef08a';
+            ctx.fillRect(-16, -35, 8, 4);
+            ctx.fillRect(8, -35, 8, 4);
+
+            ctx.restore();
+        }
+
+        function updateAndDrawObjects() {
+            const roadWidth = canvas.width * 0.7;
+            const roadLeft = (canvas.width - roadWidth) / 2;
+            const laneWidth = roadWidth / 3;
+
+            for (let i = gameObjects.length - 1; i >= 0; i--) {
+                const obj = gameObjects[i];
+                obj.y += currentSpeed;
+
+                const objX = roadLeft + obj.lane * laneWidth + laneWidth / 2;
+
+                ctx.save();
+                ctx.translate(objX, obj.y);
+
+                if (obj.type === 'coin') {
+                    ctx.fillStyle = '#facc15';
+                    ctx.beginPath();
+                    ctx.arc(0, 0, 14, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.fillStyle = '#854d0e';
+                    ctx.font = 'bold 12px sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('🪙', 0, 0);
+                } else if (obj.type === 'star') {
+                    ctx.fillStyle = '#fbbf24';
+                    ctx.font = 'bold 22px sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('⭐', 0, 0);
+                } else if (obj.type === 'obstacle') {
+                    ctx.fillStyle = '#ef4444';
+                    ctx.beginPath();
+                    ctx.roundRect(-18, -18, 36, 36, 6);
+                    ctx.fill();
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = 'bold 16px sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('⚠️', 0, 0);
+                } else if (obj.type === 'question') {
+                    ctx.fillStyle = '#8b5cf6';
+                    ctx.beginPath();
+                    ctx.roundRect(-22, -22, 44, 44, 10);
+                    ctx.fill();
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = 'bold 22px sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('❓', 0, 0);
+                }
+
+                ctx.restore();
+
+                /* Deteksi Tabrakan */
+                const distY = Math.abs(obj.y - playerCar.y);
+                const distX = Math.abs(objX - playerCar.x);
+
+                if (distY < 40 && distX < 30) {
+                    if (obj.type === 'coin') {
+                        gameCoins += 1;
+                        gameScore += 10;
+                        playSound('coin');
+                    } else if (obj.type === 'star') {
+                        gameScore += 50;
+                        playSound('star');
+                    } else if (obj.type === 'obstacle') {
+                        gameLives -= 1;
+                        gameScore = Math.max(0, gameScore - 20);
+                        playSound('crash');
+                    } else if (obj.type === 'question') {
+                        pauseAndShowQuiz();
+                    }
+                    gameObjects.splice(i, 1);
+                } else if (obj.y > canvas.height + 50) {
+                    gameObjects.splice(i, 1);
+                }
+            }
+        }
+
+        function initControls() {
+            window.onkeydown = (e) => {
+                if (!isGameRunning) return;
+                if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+                    if (playerCar.lane > 0) playerCar.lane--;
+                } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+                    if (playerCar.lane < 2) playerCar.lane++;
+                } else if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
+                    triggerBoost();
+                }
+            };
+
+            document.getElementById('btnLeft').onclick = () => { if (playerCar.lane > 0) playerCar.lane--; };
+            document.getElementById('btnRight').onclick = () => { if (playerCar.lane < 2) playerCar.lane++; };
+            document.getElementById('btnBoost').onclick = () => triggerBoost();
+        }
+
+        function triggerBoost() {
+            isBoosted = true;
+            boostTimer = 100;
+            currentSpeed = baseSpeed + 2.0;
+            playSound('boost');
+        }
+
+        let quizTimerInterval = null;
+        let currentQuizTimer = 60;
+
+        function pauseAndShowQuiz() {
+            isGameRunning = false;
+
+            let available = questionBank.filter(q => !usedQuestions.includes(q.id));
+            if (available.length === 0) {
+                usedQuestions = [];
+                available = questionBank;
+            }
+            const activeQuiz = available[Math.floor(Math.random() * available.length)];
+            usedQuestions.push(activeQuiz.id);
+
+            document.getElementById('questionCategory').innerText = activeQuiz.cat;
+            document.getElementById('questionText').innerText = activeQuiz.q;
+
+            const optsContainer = document.getElementById('quizOptionsContainer');
+            optsContainer.innerHTML = '';
+
+            activeQuiz.opt.forEach((optText, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'w-full bg-slate-800 hover:bg-blue-600 border border-slate-700 text-white font-semibold p-3 rounded-xl text-left text-sm transition transform active:scale-95 flex items-center gap-3';
+                btn.innerHTML = `<span class="bg-slate-700 px-2.5 py-1 rounded-lg text-xs font-black text-amber-400">${String.fromCharCode(65 + index)}</span> ${optText}`;
+                btn.onclick = () => handleQuizAnswer(index === activeQuiz.a);
+                optsContainer.appendChild(btn);
+            });
+
+            /* Durasi pengerjaan diubah menjadi 1 Menit (60 Detik) */
+            currentQuizTimer = 60;
+            const totalTimer = 60;
+
+            document.getElementById('quizTimerText').innerText = `${currentQuizTimer}s`;
+            document.getElementById('quizTimerBar').style.width = '100%';
+
+            document.getElementById('quizModal').classList.remove('hidden');
+
+            if (quizTimerInterval) clearInterval(quizTimerInterval);
+            quizTimerInterval = setInterval(() => {
+                currentQuizTimer--;
+                document.getElementById('quizTimerText').innerText = `${currentQuizTimer}s`;
+                document.getElementById('quizTimerBar').style.width = `${(currentQuizTimer / totalTimer) * 100}%`;
+
+                if (currentQuizTimer <= 0) {
+                    clearInterval(quizTimerInterval);
+                    handleQuizAnswer(false);
+                }
+            }, 1000);
+        }
+
+        function handleQuizAnswer(isCorrect) {
+            if (quizTimerInterval) clearInterval(quizTimerInterval);
+            document.getElementById('quizModal').classList.add('hidden');
+
+            if (isCorrect) {
+                correctCount++;
+                gameScore += 100;
+                playSound('correct');
+                triggerBoost();
+            } else {
+                wrongCount++;
+                gameScore = Math.max(0, gameScore - 25);
+                gameLives -= 1;
+                playSound('wrong');
+            }
+
+            isGameRunning = true;
+            requestAnimationFrame(gameLoop);
+        }
+
+        function finishGame(isVictory) {
+            isGameRunning = false;
+            playSound(isVictory ? 'correct' : 'crash');
+
+            const totalAnswered = correctCount + wrongCount;
+            const accuracy = totalAnswered > 0 ? Math.round((correctCount / totalAnswered) * 100) : 100;
+
+            document.getElementById('resultTitle').innerText = isVictory ? '🎉 SELAMAT JUARA!' : '💥 GAME OVER';
+            document.getElementById('resultTitle').className = isVictory ? 'text-3xl font-black text-emerald-400' : 'text-3xl font-black text-rose-500';
+            
+            document.getElementById('resScore').innerText = gameScore;
+            document.getElementById('resCorrect').innerText = `${correctCount}/${totalAnswered}`;
+            document.getElementById('resAccuracy').innerText = `${accuracy}%`;
+
+            let stars = '⭐';
+            if (accuracy >= 80) stars = '⭐⭐⭐';
+            else if (accuracy >= 50) stars = '⭐⭐';
+            document.getElementById('resStars').innerText = stars;
+
+            const prevHigh = parseInt(localStorage.getItem('pancasila_highscore') || '0');
+            if (gameScore > prevHigh) {
+                localStorage.setItem('pancasila_highscore', gameScore.toString());
+            }
+
+            if (accuracy >= 80 && isVictory) {
+                document.getElementById('certificateContainer').classList.remove('hidden');
+                document.getElementById('certStudentName').innerText = studentData.name.toUpperCase();
+                document.getElementById('certStudentClass').innerText = studentData.class;
+                document.getElementById('certScore').innerText = gameScore;
+                document.getElementById('certAccuracy').innerText = `${accuracy}%`;
+            } else {
+                document.getElementById('certificateContainer').classList.add('hidden');
+            }
+
+            document.getElementById('resultModal').classList.remove('hidden');
+        }
+
+        function showCertificateView() {
+            document.getElementById('certificateModal').classList.remove('hidden');
+        }
+
+        function closeCertificateView() {
+            document.getElementById('certificateModal').classList.add('hidden');
+        }
+
+        function restartGame() {
+            document.getElementById('resultModal').classList.add('hidden');
+            startRacingGame();
+        }
+
+        function backToMainMenu() {
+            hideAllScreens();
+            showMainMenu();
+        }
+    </script>
+</body>
+</html>
