@@ -6,7 +6,7 @@
     
     <!-- SEO & METADATA -->
     <title>Game Edukasi - Pelajaran Pancasila</title>
-    <meta name="description" content="Game Edukasi Pelajaran Pancasila untuk Sekolah Dasar. Pelajari hubungan antarsila dalam Pancasila secara seru, interaktif, dan menyenangkan!">
+    <meta name="description" content="Game Edukasi Balap Mobil Pancasila untuk Sekolah Dasar. Pelajari hubungan antarsila dalam Pancasila secara seru, interaktif, dan menyenangkan!">
     <meta name="keywords" content="Game Edukasi, Balap Mobil Pancasila, Pancasila SD, Media Pembelajaran SD, Pak Lehan">
     <meta name="author" content="Pak LEhan">
 
@@ -170,7 +170,7 @@
 
             <!-- Lencana Sub-materi -->
             <div class="bg-indigo-950/70 border border-indigo-500/50 px-6 py-2.5 rounded-full text-indigo-200 text-sm md:text-base font-bold backdrop-blur-md shadow-md">
-                Pertemuan 1 : Hubungan Antarsila dalam Pancasila
+                Pertemuan : Hubungan Antarsila dalam Pancasila
             </div>
 
             <!-- Tombol Mulai Bermain -->
@@ -228,7 +228,7 @@
                         1
                     </div>
                     <div>
-                        <h3 class="font-black text-emerald-400 text-base">Level 1 : Pelan Dan Santai</h3>
+                        <h3 class="font-black text-emerald-400 text-base">Level 1 : Pelan & Santai</h3>
                         <p class="text-xs text-slate-300">Laju mobil lambat, timer 60 detik, soal dasar.</p>
                     </div>
                 </div>
@@ -551,6 +551,15 @@
         let isSoundOn = true;
         let bgmInterval = null;
         let bgmNoteIndex = 0;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
 
         function toggleMobileMenu() {
             const menu = document.getElementById('mobileDropdown');
